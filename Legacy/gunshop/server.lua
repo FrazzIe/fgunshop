@@ -11,10 +11,10 @@ RegisterServerEvent("ws:checkMoney")
 AddEventHandler("ws:checkMoney", function(item)
 	local sourcePlayer = tonumber(source)
     TriggerEvent('es:getPlayerFromId', source, function(user)
-    	local identifier = user.getIdentifier()
+    	local identifier = user.identifier
 	    local price = item.price
 	    local hprice = item.price/2
-	    if (tonumber(user.getMoney()) >= tonumber(price)) then
+	    if (tonumber(user.money) >= tonumber(price)) then
 	    	local weapon_count = 0
 	   		local result = MySQL.Sync.fetchAll("SELECT * FROM gunshop WHERE identifier=@username",{['@username'] = identifier})
 				if result then
@@ -30,7 +30,7 @@ AddEventHandler("ws:checkMoney", function(item)
 						if item.name == LicenseZero[i] then
 							required = true
 							MySQL.Async.execute("INSERT INTO gunshop (`identifier`,`weapon`,`sellprice`,`licenselvl`,`weapon_name`) VALUES (@identifier,@weapon,@sellprice,@licenselvl,@weapon_name)", { ['@identifier'] = identifier, ['@weapon'] = item.model, ['@sellprice'] = hprice, ['@licenselvl'] = item.license, ['@weapon_name'] = item.name})
-		      				user.removeMoney((price))
+		      				user:removeMoney((price))
 		      				Messages(5,item.name,sourcePlayer)
 		      				TriggerClientEvent("ws:giveweapon", sourcePlayer, item)
 		      			end
@@ -43,7 +43,7 @@ AddEventHandler("ws:checkMoney", function(item)
 						if item.name == LicenseOne[i] then
 							required = true
 							MySQL.Async.execute("INSERT INTO gunshop (`identifier`,`weapon`,`sellprice`,`licenselvl`,`weapon_name`) VALUES (@identifier,@weapon,@sellprice,@licenselvl,@weapon_name)", { ['@identifier'] = identifier, ['@weapon'] = item.model, ['@sellprice'] = hprice, ['@licenselvl'] = item.license, ['@weapon_name'] = item.name})
-		      				user.removeMoney((price))
+		      				user:removeMoney((price))
 		      				Messages(5,item.name,sourcePlayer)
 		      				TriggerClientEvent("ws:giveweapon", sourcePlayer, item)
 		      			end
@@ -56,7 +56,7 @@ AddEventHandler("ws:checkMoney", function(item)
 						if item.name == LicenseTwo[i] then
 							required = true
 							MySQL.Async.execute("INSERT INTO gunshop (`identifier`,`weapon`,`sellprice`,`licenselvl`,`weapon_name`) VALUES (@identifier,@weapon,@sellprice,@licenselvl,@weapon_name)", { ['@identifier'] = identifier, ['@weapon'] = item.model, ['@sellprice'] = hprice, ['@licenselvl'] = item.license, ['@weapon_name'] = item.name})
-		      				user.removeMoney((price))
+		      				user:removeMoney((price))
 		      				Messages(5,item.name,sourcePlayer)
 		      				TriggerClientEvent("ws:giveweapon", sourcePlayer, item)
 		      			end
@@ -69,7 +69,7 @@ AddEventHandler("ws:checkMoney", function(item)
 						if item.name == LicenseThree[i] then
 							required = true
 							MySQL.Async.execute("INSERT INTO gunshop (`identifier`,`weapon`,`sellprice`,`licenselvl`,`weapon_name`) VALUES (@identifier,@weapon,@sellprice,@licenselvl,@weapon_name)", { ['@identifier'] = identifier, ['@weapon'] = item.model, ['@sellprice'] = hprice, ['@licenselvl'] = item.license, ['@weapon_name'] = item.name})
-		      				user.removeMoney((price))
+		      				user:removeMoney((price))
 		      				Messages(5,item.name,sourcePlayer)
 		      				TriggerClientEvent("ws:giveweapon", sourcePlayer, item)
 		      			end
@@ -82,7 +82,7 @@ AddEventHandler("ws:checkMoney", function(item)
 						if item.name == LicenseFour[i] then
 							required = true
 							MySQL.Async.execute("INSERT INTO gunshop (`identifier`,`weapon`,`sellprice`,`licenselvl`,`weapon_name`) VALUES (@identifier,@weapon,@sellprice,@licenselvl,@weapon_name)", { ['@identifier'] = identifier, ['@weapon'] = item.model, ['@sellprice'] = hprice, ['@licenselvl'] = item.license, ['@weapon_name'] = item.name})
-		      				user.removeMoney((price))
+		      				user:removeMoney((price))
 		      				Messages(5,item.name,sourcePlayer)
 		      				TriggerClientEvent("ws:giveweapon", sourcePlayer, item)
 		      			end
@@ -110,10 +110,10 @@ RegisterServerEvent("ws:checkMoneyillegal")
 AddEventHandler("ws:checkMoneyillegal", function(item)
 	local sourcePlayer = tonumber(source)
     TriggerEvent('es:getPlayerFromId', source, function(user)
-    	local identifier = user.getIdentifier()
+    	local identifier = user.identifier
 	    local price = item.price
 	    local hprice = 2
-	    if (tonumber(user.getMoney()) >= tonumber(price)) then
+	    if (tonumber(user.money) >= tonumber(price)) then
 	    	local weapon_count = 0
 	   		local result = MySQL.Sync.fetchAll("SELECT * FROM gunshop WHERE identifier=@username",{['@username'] = identifier})
 				if result then
@@ -123,7 +123,7 @@ AddEventHandler("ws:checkMoneyillegal", function(item)
 				end
 			if tonumber(max_weapons) > tonumber(weapon_count) then
 				MySQL.Async.execute("INSERT INTO gunshop (`identifier`,`weapon`,`sellprice`,`licenselvl`,`weapon_name`) VALUES (@identifier,@weapon,@sellprice,@licenselvl,@weapon_name)", { ['@identifier'] = identifier, ['@weapon'] = item.model, ['@sellprice'] = hprice, ['@licenselvl'] = 5, ['@weapon_name'] = item.name})
-	      		user.removeMoney((price))
+	      		user:removeMoney((price))
 	      		Messages(5,item.name,sourcePlayer)
 	      		TriggerClientEvent("ws:giveweapon", sourcePlayer, item)				
 			end
@@ -149,7 +149,7 @@ RegisterServerEvent("ws:sellweapons")
 AddEventHandler("ws:sellweapons", function()
 	local sourcePlayer = tonumber(source)
     TriggerEvent('es:getPlayerFromId', source, function(user)
-    	local identifier = user.getIdentifier()
+    	local identifier = user.identifier
         local result = MySQL.Sync.fetchAll("SELECT sellprice FROM gunshop WHERE identifier=@username",{['@username'] = identifier})
         local money = 0
         if(result)then
@@ -157,7 +157,7 @@ AddEventHandler("ws:sellweapons", function()
                 money = money + tonumber(result[i].sellprice)
             end
             if money > 0 then
-            	user.addMoney(money)
+            	user:addMoney(money)
             	MySQL.Sync.execute("DELETE FROM gunshop WHERE identifier=@user",{['@user']= identifier})
             	TriggerClientEvent("ws:removeWeapons", sourcePlayer)
             	Messages(6,nil,sourcePlayer)
