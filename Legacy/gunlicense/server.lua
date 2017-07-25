@@ -7,24 +7,24 @@ RegisterServerEvent("license:checkMoney")
 AddEventHandler("license:checkMoney", function(item)
 	local sourcePlayer = tonumber(source)
     TriggerEvent('es:getPlayerFromId', source, function(user)
-    	local identifier = user.getIdentifier()
+    	local identifier = user.identifier
 	    local price = item.price
-	    if (tonumber(user.getMoney()) >= tonumber(price)) then
+	    if (tonumber(user.money) >= tonumber(price)) then
 	    	local license = getlicense(identifier)
 	    	if license == 0 and item.level == 1 then
-	    		user.removeMoney((price))
+	    		user:removeMoney((price))
 	    		MySQL.Sync.execute("UPDATE users SET gunlicense=@license WHERE identifier=@identifier", {['@identifier'] = identifier, ['@license'] = item.level})
 	    		TriggerClientEvent("pNotify:SendNotification", sourcePlayer, {text = item.name.." license purchased!",type = "error",queue = "left",timeout = 2500,layout = "centerRight"})
 	    	elseif license == 1 and item.level == 2 then
-	    		user.removeMoney((price))
+	    		user:removeMoney((price))
 	    		MySQL.Sync.execute("UPDATE users SET gunlicense=@license WHERE identifier=@identifier", {['@identifier'] = identifier, ['@license'] = item.level})
 	    		TriggerClientEvent("pNotify:SendNotification", sourcePlayer, {text = item.name.." license purchased!",type = "error",queue = "left",timeout = 2500,layout = "centerRight"})	 
 	    	elseif license == 2 and item.level == 3 then
-	    		user.removeMoney((price))
+	    		user:removeMoney((price))
 	    		MySQL.Sync.execute("UPDATE users SET gunlicense=@license WHERE identifier=@identifier", {['@identifier'] = identifier, ['@license'] = item.level})
 	    		TriggerClientEvent("pNotify:SendNotification", sourcePlayer, {text = item.name.." license purchased!",type = "error",queue = "left",timeout = 2500,layout = "centerRight"})
 	    	elseif license == 3 and item.level == 4 then
-	    		user.removeMoney((price))
+	    		user:removeMoney((price))
 	    		MySQL.Sync.execute("UPDATE users SET gunlicense=@license WHERE identifier=@identifier", {['@identifier'] = identifier, ['@license'] = item.level})
 	    		TriggerClientEvent("pNotify:SendNotification", sourcePlayer, {text = item.name.." license purchased!",type = "error",queue = "left",timeout = 2500,layout = "centerRight"})
 	    	else
