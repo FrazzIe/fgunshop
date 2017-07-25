@@ -100,7 +100,7 @@ function level2()
     Menu.previous = "Main"   
     Menu.addButton("Smoke Grenade ~g~$~r~1000", "buyweapon", {name="Smoke Grenade",price=1000,license=2,model="WEAPON_SmokeGrenade"})
     Menu.addButton("Pump Shotgun ~g~$~r~15000", "buyweapon", {name="Pump Shotgun",price=15000,license=2,model="WEAPON_PumpShotgun"})
-    Menu.addButton("Sawn-off Shotgun ~g~$~r~22000", "buyweapon", {name="Sawn-off Shotgun ",price=22000,license=2,model="WEAPON_SAWNOFFSHOTGUN"})
+    Menu.addButton("Sawn-off Shotgun ~g~$~r~22000", "buyweapon", {name="Sawn-off Shotgun",price=22000,license=2,model="WEAPON_SAWNOFFSHOTGUN"})
     Menu.addButton("Bullpup Shotgun ~g~$~r~35000", "buyweapon", {name="Bullpup Shotgun",price=35000,license=2,model="WEAPON_BullpupShotgun"})
     Menu.addButton("Double-Barrel ~g~$~r~40000", "buyweapon", {name="Double-Barrel",price=40000,license=2,model="WEAPON_DoubleBarrelShotgun"})
     Menu.addButton("Auto Shotgun ~g~$~r~55000", "buyweapon", {name="Auto Shotgun",price=55000,license=2,model="WEAPON_Autoshotgun"})
